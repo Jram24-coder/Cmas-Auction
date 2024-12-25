@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2487.7">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="en"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;Christmas Auction Game&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.item { margin: 20px 0; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.bid-log { text-align: left; margin: 20px auto; width: 80%; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>button { padding: 10px 20px; margin: 10px; cursor: pointer; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;h1&gt;Christmas Auction Game&lt;/h1&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;h3 id="current-item"&gt;Item: A-1&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;p id="item-description"&gt;The ultimate tool for creating unforgettable moments...&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;h2 id="highest-bid"&gt;Highest Bid: $0&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;input id="bid-amount" type="number" placeholder="Enter your bid" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;input id="player-name" type="text" placeholder="Your Name" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;button onclick="placeBid()"&gt;Place Bid&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="bid-log"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;h3&gt;Bid Log&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;ul id="log"&gt;&lt;/ul&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;button onclick="nextItem()"&gt;Next Item&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>let currentItem = 1;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const items = [</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ code: "A-1", description: "The ultimate tool for creating unforgettable moments..." },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ code: "A-2", description: "A game-changer for anyone who values comfort and convenience." },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ code: "A-3", description: "Transform your environment into something out of a dream." }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>];</p>
+<p class="p1"><span class="Apple-converted-space">        </span>let highestBid = 0;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>let bidLog = [];</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function placeBid() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const bidAmount = parseInt(document.getElementById("bid-amount").value);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const playerName = document.getElementById("player-name").value;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (bidAmount &gt; highestBid) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>highestBid = bidAmount;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>document.getElementById("highest-bid").innerText = `Highest Bid: $${highestBid} by ${playerName}`;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>bidLog.push({ amount: bidAmount, name: playerName });</p>
+<p class="p1"><span class="Apple-converted-space">                </span>updateLog();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>alert("Bid must be higher than the current highest bid!");</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function updateLog() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const logElement = document.getElementById("log");</p>
+<p class="p1"><span class="Apple-converted-space">            </span>logElement.innerHTML = "";</p>
+<p class="p1"><span class="Apple-converted-space">            </span>bidLog.forEach((bid) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const li = document.createElement("li");</p>
+<p class="p1"><span class="Apple-converted-space">                </span>li.textContent = `${bid.name} bid $${bid.amount}`;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>logElement.appendChild(li);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function nextItem() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>currentItem++;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (currentItem &gt; items.length) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>alert("Auction is over!");</p>
+<p class="p1"><span class="Apple-converted-space">                </span>return;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>highestBid = 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>bidLog = [];</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById("current-item").innerText = `Item: ${items[currentItem - 1].code}`;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById("item-description").innerText = items[currentItem - 1].description;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById("highest-bid").innerText = "Highest Bid: $0";</p>
+<p class="p1"><span class="Apple-converted-space">            </span>updateLog();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
